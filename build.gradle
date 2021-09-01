@@ -63,5 +63,8 @@ githook {
         'pre-commit' {
             task = 'spotlessCheck sonarlintMain sonarlintTest'
         }
+        'commit-msg' {
+            task = 'commitlint -Dmsgfile=\$1'
+        }
     }
 }
