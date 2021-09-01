@@ -1,0 +1,4 @@
+logging:
+  level:
+    root: WARN
+    "[com.example.demo]": DEBUG
