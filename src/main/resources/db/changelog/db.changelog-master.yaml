@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1630552606662-1
+      author: paakmau
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: BookPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: author
+                  type: VARCHAR(255)
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+            tableName: Book
+  - changeSet:
+      id: 1630552606662-2
+      author: paakmau
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: title
+            indexName: IDXodppys65lq7q1xbx8o6p6fgxj
+            tableName: Book
