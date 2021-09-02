@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.liquibase.gradle' version '2.0.4'
     id 'com.diffplug.spotless' version '5.14.3'
     id 'name.remal.sonarlint' version '1.5.0'
     id 'com.star-zero.gradle.githook' version '1.2.1'
@@ -24,10 +25,28 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.google.code.gson:gson:2.8.8'
+
+    liquibaseRuntime 'org.liquibase:liquibase-core:4.3.3'
+    liquibaseRuntime 'mysql:mysql-connector-java'
+    liquibaseRuntime 'org.springframework.boot:spring-boot-starter-data-jpa'
+    liquibaseRuntime 'org.liquibase.ext:liquibase-hibernate5:4.4.3'
+    liquibaseRuntime sourceSets.main.output
 }
 
 test {
     useJUnitPlatform()
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'src/main/resources/db/changelog/db.changelog-master.yaml'
+            url 'jdbc:mysql://localhost:3306/demo?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC'
+            username 'root'
+            password System.getenv('MYSQL_ROOT_PASSWORD')
+            referenceUrl 'hibernate:spring:com.example.demo.entity?dialect=liquibase.ext.hibernate.database.HibernateGenericDialect'
+        }
+    }
 }
 
 spotless {
