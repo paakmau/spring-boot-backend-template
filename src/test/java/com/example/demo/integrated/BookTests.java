@@ -49,13 +49,13 @@ class BookTests {
         for (BookVo vo : bookVos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.post("/book")
+                                    MockMvcRequestBuilders.post("/books")
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(gson.toJson(vo)))
                             .andExpect(MockMvcResultMatchers.status().isCreated())
                             .andReturn();
-            Long id = gson.fromJson(res.getResponse().getContentAsString(), Long.class);
-            vo.setId(id);
+            BookVo resVo = gson.fromJson(res.getResponse().getContentAsString(), BookVo.class);
+            vo.setId(resVo.getId());
         }
     }
 
@@ -64,19 +64,19 @@ class BookTests {
         BookVo vo = new BookVo(null, "Book 10", "Author 10");
         MvcResult res =
                 mvc.perform(
-                                MockMvcRequestBuilders.post("/book")
+                                MockMvcRequestBuilders.post("/books")
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(gson.toJson(vo)))
                         .andExpect(MockMvcResultMatchers.status().isCreated())
                         .andReturn();
-        Long id = gson.fromJson(res.getResponse().getContentAsString(), Long.class);
-        assertNotNull(id);
+        BookVo resVo = gson.fromJson(res.getResponse().getContentAsString(), BookVo.class);
+        assertNotNull(resVo);
     }
 
     @Test
     void delete() throws Exception {
         for (BookVo vo : bookVos)
-            mvc.perform(MockMvcRequestBuilders.delete("/book/{id}", vo.getId()))
+            mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", vo.getId()))
                     .andExpect(MockMvcResultMatchers.status().isNoContent())
                     .andReturn();
     }
@@ -92,12 +92,17 @@ class BookTests {
                                                 vo.getTitle().toUpperCase(),
                                                 vo.getAuthor().toLowerCase()))
                         .collect(Collectors.toList());
-        for (BookVo vo : modifiedVos)
-            mvc.perform(
-                            MockMvcRequestBuilders.put("/book/{id}", vo.getId())
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(gson.toJson(vo)))
-                    .andExpect(MockMvcResultMatchers.status().isOk());
+        for (BookVo vo : modifiedVos) {
+            MvcResult res =
+                    mvc.perform(
+                                    MockMvcRequestBuilders.put("/books/{id}", vo.getId())
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .content(gson.toJson(vo)))
+                            .andExpect(MockMvcResultMatchers.status().isOk())
+                            .andReturn();
+            BookVo resVo = gson.fromJson(res.getResponse().getContentAsString(), BookVo.class);
+            assertNotNull(resVo);
+        }
     }
 
     @Test
@@ -105,7 +110,7 @@ class BookTests {
         for (BookVo vo : bookVos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.get("/book/{id}", vo.getId())
+                                    MockMvcRequestBuilders.get("/books/{id}", vo.getId())
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(gson.toJson(vo)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -120,7 +125,7 @@ class BookTests {
         for (BookVo vo : bookVos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.get("/book")
+                                    MockMvcRequestBuilders.get("/books")
                                             .param("title", vo.getTitle())
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(gson.toJson(vo)))
