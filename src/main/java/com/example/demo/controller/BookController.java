@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/book")
+@RequestMapping(value = "/books")
 public class BookController {
     @Autowired private BookService service;
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Long post(@RequestBody BookVo vo) {
+    public BookVo post(@RequestBody BookVo vo) {
         return service.create(vo);
     }
 
@@ -35,8 +35,8 @@ public class BookController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void put(@PathVariable Long id, @RequestBody BookVo vo) {
-        service.update(id, vo);
+    public BookVo put(@PathVariable Long id, @RequestBody BookVo vo) {
+        return service.update(id, vo);
     }
 
     @GetMapping(value = "/{id}")

@@ -21,12 +21,12 @@ public class BookServiceImpl implements BookService {
     @Autowired private BookRepo repo;
 
     @Override
-    public Long create(BookVo vo) {
+    public BookVo create(BookVo vo) {
         if (vo.getId() != null) {
             logger.warn("The Id of Book is not null");
             throw new InvalidInputException(Book.class, "Id is not null");
         }
-        return repo.save(vo.toBook()).getId();
+        return BookVo.fromEntity(repo.save(vo.toBook()));
     }
 
     @Override
@@ -39,13 +39,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void update(Long id, BookVo vo) {
+    public BookVo update(Long id, BookVo vo) {
         if (repo.findById(id).isEmpty()) {
             logger.warn("Can't update Book by Id {}", id);
             throw new NotFoundException(Book.class, new String[] {"Id"});
         }
         vo.setId(id);
-        repo.save(vo.toBook());
+        return BookVo.fromEntity(repo.save(vo.toBook()));
     }
 
     @Override
