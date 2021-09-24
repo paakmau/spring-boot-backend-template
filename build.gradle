@@ -89,6 +89,14 @@ spotless {
         indentWithSpaces(2)
         endWithNewline()
     }
+
+    format 'dotfiles', {
+        target '.gitignore', '.gitattributes'
+
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
 }
 
 githook {
