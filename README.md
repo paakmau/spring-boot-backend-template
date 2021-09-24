@@ -42,12 +42,17 @@ SpringFox will scan the `controller` package, and automatically generate API doc
 
 When the application is running, these URLs are available:
 
-- All Swagger Resources(groups)  
-   `http://localhost:8080/swagger-resources`
-- Swagger UI endpoint  
-   `http://localhost:8080/swagger-ui/`
-- Swagger docs endpoint  
-   `http://localhost:8080/v3/api-docs`
+### All Swagger Resources(groups)
+
+`http://localhost:8080/swagger-resources`
+
+### Swagger UI endpoint
+
+`http://localhost:8080/swagger-ui/`
+
+### Swagger docs endpoint
+
+`http://localhost:8080/v3/api-docs`
 
 ## Multiple environments
 
