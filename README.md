@@ -36,7 +36,7 @@ Enter `http://localhost:8080/swagger-ui/` in the browser to access the document.
 
 ## Document generation
 
-https://github.com/springfox/springfox
+<https://github.com/springfox/springfox>
 
 SpringFox will scan the `controller` package, and automatically generate API document.
 
@@ -68,9 +68,9 @@ Notice that the password of MySQL should not be saved in the repository. You nee
 
 ### Version control
 
-https://github.com/liquibase/liquibase  
-https://github.com/liquibase/liquibase-gradle-plugin  
-https://github.com/liquibase/liquibase-hibernate
+<https://github.com/liquibase/liquibase>  
+<https://github.com/liquibase/liquibase-gradle-plugin>  
+<https://github.com/liquibase/liquibase-hibernate>
 
 The changelog file is the `db.changelog-master.yaml` in the `resources/db/changelog` directory.
 
@@ -87,7 +87,7 @@ Exception classes should be put in the `exception` package. And use the `@Respon
 
 ## Code formatting
 
-https://github.com/diffplug/spotless.
+<https://github.com/diffplug/spotless>.
 
 ### Check the style
 
@@ -111,7 +111,7 @@ You can install the [Spotless Gradle](https://marketplace.visualstudio.com/items
 
 ## Code quality checking
 
-https://remal.gitlab.io/gradle-plugins/plugins/name.remal.sonarlint/.
+<https://remal.gitlab.io/gradle-plugins/plugins/name.remal.sonarlint/>.
 
 ### Check main
 
@@ -135,7 +135,7 @@ Install the [SonarLint](https://marketplace.visualstudio.com/items?itemName=Sona
 
 ## Commit message checking
 
-https://github.com/NetrisTV/gradle-commitlint-plugin
+<https://github.com/NetrisTV/gradle-commitlint-plugin>
 
 Pass a commit message to Commitlint Gradle plugin, the plugin will lint it against [Conventional Commits](https://www.conventionalcommits.org/) rules.
 
@@ -143,7 +143,7 @@ This plugin should be used with Git Hook
 
 ## Git hook
 
-https://github.com/STAR-ZERO/gradle-githook
+<https://github.com/STAR-ZERO/gradle-githook>
 
 There are some hooks configured in this template:
 
