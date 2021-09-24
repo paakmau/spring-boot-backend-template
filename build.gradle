@@ -75,10 +75,19 @@ spotless {
         indentWithSpaces()
     }
 
-    format 'misc', {
-        target '**/*.md', '**/*.yaml'
+    format 'md', {
+        target '**/*.md'
 
-        prettier()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
+
+    format 'yaml', {
+        target  '**/*.yaml'
+
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
     }
 }
 
