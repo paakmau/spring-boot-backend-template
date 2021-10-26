@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1630552606662-1
+    id: 1635260832650-1
     author: paakmau
     changes:
     - createTable:
@@ -10,7 +10,7 @@ databaseChangeLog:
             constraints:
               nullable: false
               primaryKey: true
-              primaryKeyName: BookPK
+              primaryKeyName: bookPK
             name: id
             type: BIGINT
         - column:
@@ -19,14 +19,14 @@ databaseChangeLog:
         - column:
             name: title
             type: VARCHAR(255)
-        tableName: Book
+        tableName: book
 - changeSet:
-    id: 1630552606662-2
+    id: 1635260832650-2
     author: paakmau
     changes:
     - createIndex:
         columns:
         - column:
             name: title
-        indexName: IDXodppys65lq7q1xbx8o6p6fgxj
-        tableName: Book
+        indexName: IDXg0286ag1dlt4473st1ugemd0m
+        tableName: book
