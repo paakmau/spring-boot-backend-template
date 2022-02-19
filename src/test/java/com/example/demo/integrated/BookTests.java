@@ -60,7 +60,7 @@ class BookTests {
     }
 
     @Test
-    void post() throws Exception {
+    void testPost() throws Exception {
         BookVo vo = new BookVo(null, "Book 10", "Author 10");
         MvcResult res =
                 mvc.perform(
@@ -74,7 +74,7 @@ class BookTests {
     }
 
     @Test
-    void delete() throws Exception {
+    void testDelete() throws Exception {
         for (BookVo vo : bookVos)
             mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", vo.getId()))
                     .andExpect(MockMvcResultMatchers.status().isNoContent())
@@ -82,7 +82,7 @@ class BookTests {
     }
 
     @Test
-    void put() throws Exception {
+    void testPut() throws Exception {
         List<BookVo> modifiedVos =
                 bookVos.stream()
                         .map(
@@ -106,7 +106,7 @@ class BookTests {
     }
 
     @Test
-    void get() throws Exception {
+    void testGet() throws Exception {
         for (BookVo vo : bookVos) {
             MvcResult res =
                     mvc.perform(
@@ -121,7 +121,7 @@ class BookTests {
     }
 
     @Test
-    void getByTitle() throws Exception {
+    void testGetByTitle() throws Exception {
         for (BookVo vo : bookVos) {
             MvcResult res =
                     mvc.perform(

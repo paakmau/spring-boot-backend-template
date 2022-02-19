@@ -36,7 +36,7 @@ class BookRepoTests {
     }
 
     @Test
-    void get() {
+    void testGet() {
         assertEquals(bookMap.size(), repo.count());
 
         for (Book book : bookMap.values()) {
@@ -45,7 +45,7 @@ class BookRepoTests {
     }
 
     @Test
-    void getByTitle() {
+    void testGetByTitle() {
         for (Book book : bookMap.values()) {
             List<Book> actualBooks = repo.findByTitle(book.getTitle());
             assertEquals(1, actualBooks.size());

@@ -41,7 +41,7 @@ class BookServiceTests {
     void init() {}
 
     @Test
-    void get() {
+    void testGet() {
         for (Book book : books) {
             Mockito.when(repo.findById(book.getId())).thenReturn(Optional.of(book));
         }
@@ -51,7 +51,7 @@ class BookServiceTests {
     }
 
     @Test
-    void getByTitle() {
+    void testGetByTitle() {
         for (Book book : books) {
             Mockito.when(repo.findByTitle(book.getTitle())).thenReturn(Arrays.asList(book));
         }
