@@ -1,11 +1,10 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.dto.BookDto;
 import com.example.demo.entity.Book;
 import com.example.demo.exception.InvalidInputException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repo.BookRepo;
-import com.example.demo.service.BookService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
