@@ -1,25 +1,25 @@
-package com.example.demo.vo;
+package com.example.demo.dto;
 
 import com.example.demo.entity.Book;
 import java.util.Objects;
 
-public class BookVo {
+public class BookDto {
     private Long id;
 
     private String title;
 
     private String author;
 
-    public BookVo() {}
+    public BookDto() {}
 
-    public BookVo(Long id, String title, String author) {
+    public BookDto(Long id, String title, String author) {
         this.id = id;
         this.title = title;
         this.author = author;
     }
 
-    public static BookVo fromEntity(Book book) {
-        return new BookVo(book.getId(), book.getTitle(), book.getAuthor());
+    public static BookDto fromEntity(Book book) {
+        return new BookDto(book.getId(), book.getTitle(), book.getAuthor());
     }
 
     public Long getId() {
@@ -53,8 +53,8 @@ public class BookVo {
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
-        if (!(o instanceof BookVo)) return false;
-        BookVo other = (BookVo) o;
+        if (!(o instanceof BookDto)) return false;
+        BookDto other = (BookDto) o;
         if (this.id == null ? other.id != null : !this.id.equals(other.id)) return false;
         if (this.title == null ? other.title != null : !this.title.equals(other.title))
             return false;

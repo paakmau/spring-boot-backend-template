@@ -1,16 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.vo.BookVo;
+import com.example.demo.dto.BookDto;
 import java.util.List;
 
 public interface BookService {
-    BookVo create(BookVo vo);
+    BookDto create(BookDto dto);
 
     void delete(Long id);
 
-    BookVo update(Long id, BookVo vo);
+    BookDto update(Long id, BookDto dto);
 
-    BookVo get(Long id);
+    BookDto get(Long id);
 
-    List<BookVo> getByTitle(String title);
+    List<BookDto> getByTitle(String title);
 }

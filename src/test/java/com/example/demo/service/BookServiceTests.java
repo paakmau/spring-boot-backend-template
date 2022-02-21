@@ -2,9 +2,9 @@ package com.example.demo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.example.demo.dto.BookDto;
 import com.example.demo.entity.Book;
 import com.example.demo.repo.BookRepo;
-import com.example.demo.vo.BookVo;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +27,8 @@ class BookServiceTests {
                     new Book(2L, "Book 2", "Author 2"),
                     new Book(3L, "Book 3", "Author 3"));
 
-    private final List<BookVo> bookVos =
-            books.stream().map(BookVo::fromEntity).collect(Collectors.toList());
+    private final List<BookDto> bookVos =
+            books.stream().map(BookDto::fromEntity).collect(Collectors.toList());
 
     @MockBean private BookRepo repo;
 
@@ -45,8 +45,8 @@ class BookServiceTests {
         for (Book book : books) {
             Mockito.when(repo.findById(book.getId())).thenReturn(Optional.of(book));
         }
-        for (BookVo vo : bookVos) {
-            assertEquals(vo, service.get(vo.getId()));
+        for (BookDto dto : bookVos) {
+            assertEquals(dto, service.get(dto.getId()));
         }
     }
 
@@ -55,10 +55,10 @@ class BookServiceTests {
         for (Book book : books) {
             Mockito.when(repo.findByTitle(book.getTitle())).thenReturn(Arrays.asList(book));
         }
-        for (BookVo vo : bookVos) {
-            List<BookVo> vos = service.getByTitle(vo.getTitle());
+        for (BookDto dto : bookVos) {
+            List<BookDto> vos = service.getByTitle(dto.getTitle());
             assertEquals(1, vos.size());
-            assertEquals(vo, vos.get(0));
+            assertEquals(dto, vos.get(0));
         }
     }
 

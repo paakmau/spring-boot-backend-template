@@ -3,7 +3,7 @@ package com.example.demo.integrated;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.example.demo.vo.BookVo;
+import com.example.demo.dto.BookDto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
@@ -34,108 +34,108 @@ class BookTests {
 
     private Gson gson = new Gson();
 
-    private List<BookVo> bookVos =
+    private List<BookDto> bookVos =
             Arrays.asList(
-                    new BookVo(null, "Book 1", "Author 1"),
-                    new BookVo(null, "Book 2", "Author 2"),
-                    new BookVo(null, "Book 3", "Author 3"));
+                    new BookDto(null, "Book 1", "Author 1"),
+                    new BookDto(null, "Book 2", "Author 2"),
+                    new BookDto(null, "Book 3", "Author 3"));
 
     @BeforeAll
     static void initAll() {}
 
     @BeforeEach
     void init() throws Exception {
-        for (BookVo vo : bookVos) {
+        for (BookDto dto : bookVos) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.post("/books")
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content(gson.toJson(vo)))
+                                            .content(gson.toJson(dto)))
                             .andExpect(MockMvcResultMatchers.status().isCreated())
                             .andReturn();
-            BookVo resVo = gson.fromJson(res.getResponse().getContentAsString(), BookVo.class);
-            vo.setId(resVo.getId());
+            BookDto resVo = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+            dto.setId(resVo.getId());
         }
     }
 
     @Test
     void testPost() throws Exception {
-        BookVo vo = new BookVo(null, "Book 10", "Author 10");
+        BookDto dto = new BookDto(null, "Book 10", "Author 10");
         MvcResult res =
                 mvc.perform(
                                 MockMvcRequestBuilders.post("/books")
                                         .contentType(MediaType.APPLICATION_JSON)
-                                        .content(gson.toJson(vo)))
+                                        .content(gson.toJson(dto)))
                         .andExpect(MockMvcResultMatchers.status().isCreated())
                         .andReturn();
-        BookVo resVo = gson.fromJson(res.getResponse().getContentAsString(), BookVo.class);
+        BookDto resVo = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
         assertNotNull(resVo);
     }
 
     @Test
     void testDelete() throws Exception {
-        for (BookVo vo : bookVos)
-            mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", vo.getId()))
+        for (BookDto dto : bookVos)
+            mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", dto.getId()))
                     .andExpect(MockMvcResultMatchers.status().isNoContent())
                     .andReturn();
     }
 
     @Test
     void testPut() throws Exception {
-        List<BookVo> modifiedVos =
+        List<BookDto> modifiedVos =
                 bookVos.stream()
                         .map(
-                                vo ->
-                                        new BookVo(
-                                                vo.getId(),
-                                                vo.getTitle().toUpperCase(),
-                                                vo.getAuthor().toLowerCase()))
+                                dto ->
+                                        new BookDto(
+                                                dto.getId(),
+                                                dto.getTitle().toUpperCase(),
+                                                dto.getAuthor().toLowerCase()))
                         .collect(Collectors.toList());
-        for (BookVo vo : modifiedVos) {
+        for (BookDto dto : modifiedVos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.put("/books/{id}", vo.getId())
+                                    MockMvcRequestBuilders.put("/books/{id}", dto.getId())
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content(gson.toJson(vo)))
+                                            .content(gson.toJson(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
-            BookVo resVo = gson.fromJson(res.getResponse().getContentAsString(), BookVo.class);
+            BookDto resVo = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
             assertNotNull(resVo);
         }
     }
 
     @Test
     void testGet() throws Exception {
-        for (BookVo vo : bookVos) {
+        for (BookDto dto : bookVos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.get("/books/{id}", vo.getId())
+                                    MockMvcRequestBuilders.get("/books/{id}", dto.getId())
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content(gson.toJson(vo)))
+                                            .content(gson.toJson(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
-            BookVo resVo = gson.fromJson(res.getResponse().getContentAsString(), BookVo.class);
-            assertEquals(vo, resVo);
+            BookDto resVo = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+            assertEquals(dto, resVo);
         }
     }
 
     @Test
     void testGetByTitle() throws Exception {
-        for (BookVo vo : bookVos) {
+        for (BookDto dto : bookVos) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.get("/books")
-                                            .param("title", vo.getTitle())
+                                            .param("title", dto.getTitle())
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content(gson.toJson(vo)))
+                                            .content(gson.toJson(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
 
-            Type bookVoListType = new TypeToken<ArrayList<BookVo>>() {}.getType();
-            List<BookVo> resVos =
+            Type bookVoListType = new TypeToken<ArrayList<BookDto>>() {}.getType();
+            List<BookDto> resVos =
                     gson.fromJson(res.getResponse().getContentAsString(), bookVoListType);
             assertEquals(1, resVos.size());
-            assertEquals(vo, resVos.get(0));
+            assertEquals(dto, resVos.get(0));
         }
     }
 

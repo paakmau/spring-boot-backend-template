@@ -1,11 +1,11 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.BookDto;
 import com.example.demo.entity.Book;
 import com.example.demo.exception.InvalidInputException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repo.BookRepo;
 import com.example.demo.service.BookService;
-import com.example.demo.vo.BookVo;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,12 +21,12 @@ public class BookServiceImpl implements BookService {
     @Autowired private BookRepo repo;
 
     @Override
-    public BookVo create(BookVo vo) {
-        if (vo.getId() != null) {
+    public BookDto create(BookDto dto) {
+        if (dto.getId() != null) {
             logger.warn("The Id of Book is not null");
             throw new InvalidInputException(Book.class, "Id is not null");
         }
-        return BookVo.fromEntity(repo.save(vo.toBook()));
+        return BookDto.fromEntity(repo.save(dto.toBook()));
     }
 
     @Override
@@ -39,30 +39,30 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookVo update(Long id, BookVo vo) {
+    public BookDto update(Long id, BookDto dto) {
         if (repo.findById(id).isEmpty()) {
             logger.warn("Can't update Book by Id {}", id);
             throw new NotFoundException(Book.class, new String[] {"Id"});
         }
-        vo.setId(id);
-        return BookVo.fromEntity(repo.save(vo.toBook()));
+        dto.setId(id);
+        return BookDto.fromEntity(repo.save(dto.toBook()));
     }
 
     @Override
-    public BookVo get(Long id) {
+    public BookDto get(Long id) {
         Optional<Book> book = repo.findById(id);
         if (book.isEmpty()) {
             logger.warn("Can't get Book by Id {}", id);
             throw new NotFoundException(Book.class, new String[] {"Id"});
         }
-        return BookVo.fromEntity(book.get());
+        return BookDto.fromEntity(book.get());
     }
 
     @Override
-    public List<BookVo> getByTitle(String title) {
-        List<BookVo> books =
+    public List<BookDto> getByTitle(String title) {
+        List<BookDto> books =
                 repo.findByTitle(title).stream()
-                        .map(BookVo::fromEntity)
+                        .map(BookDto::fromEntity)
                         .collect(Collectors.toList());
         if (books.isEmpty()) {
             logger.warn("Can't get Book by Title {}", title);

@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.BookDto;
 import com.example.demo.service.BookService;
-import com.example.demo.vo.BookVo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +23,8 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public BookVo post(@RequestBody BookVo vo) {
-        return service.create(vo);
+    public BookDto post(@RequestBody BookDto dto) {
+        return service.create(dto);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -35,18 +35,18 @@ public class BookController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public BookVo put(@PathVariable Long id, @RequestBody BookVo vo) {
-        return service.update(id, vo);
+    public BookDto put(@PathVariable Long id, @RequestBody BookDto dto) {
+        return service.update(id, dto);
     }
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public BookVo get(@PathVariable Long id) {
+    public BookDto get(@PathVariable Long id) {
         return service.get(id);
     }
 
     @GetMapping
-    public List<BookVo> getByTitle(@RequestParam String title) {
+    public List<BookDto> getByTitle(@RequestParam String title) {
         return service.getByTitle(title);
     }
 }
