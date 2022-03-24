@@ -15,27 +15,35 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 class BookServiceTests {
-    private final List<Book> books =
-            Arrays.asList(
-                    new Book(1L, "Book 1", "Author 1"),
-                    new Book(2L, "Book 2", "Author 2"),
-                    new Book(3L, "Book 3", "Author 3"));
-
-    private final List<BookDto> bookVos =
-            books.stream().map(BookDto::fromEntity).collect(Collectors.toList());
+    private static List<Book> books;
+    private static List<BookDto> bookVos;
 
     @MockBean private BookRepo repo;
 
     @Autowired private BookService service;
 
     @BeforeAll
-    static void initAll() {}
+    static void initAll() {
+        ModelMapper modelMapper = new ModelMapper();
+
+        books =
+                Arrays.asList(
+                        new Book(1L, "Book 1", "Author 1"),
+                        new Book(2L, "Book 2", "Author 2"),
+                        new Book(3L, "Book 3", "Author 3"));
+
+        bookVos =
+                books.stream()
+                        .map(b -> modelMapper.map(b, BookDto.class))
+                        .collect(Collectors.toList());
+    }
 
     @BeforeEach
     void init() {}

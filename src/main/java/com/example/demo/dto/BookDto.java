@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.Book;
 import java.util.Objects;
 
 public class BookDto {
@@ -16,10 +15,6 @@ public class BookDto {
         this.id = id;
         this.title = title;
         this.author = author;
-    }
-
-    public static BookDto fromEntity(Book book) {
-        return new BookDto(book.getId(), book.getTitle(), book.getAuthor());
     }
 
     public Long getId() {
@@ -44,10 +39,6 @@ public class BookDto {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public Book toBook() {
-        return new Book(this.id, this.title, this.author);
     }
 
     @Override

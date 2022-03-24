@@ -8,6 +8,7 @@ import com.example.demo.repo.BookRepo;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired private ModelMapper modelMapper;
+
     @Autowired private BookRepo repo;
 
     @Override
@@ -25,7 +28,7 @@ public class BookServiceImpl implements BookService {
             logger.warn("The Id of Book is not null");
             throw new InvalidInputException(Book.class, "Id is not null");
         }
-        return BookDto.fromEntity(repo.save(dto.toBook()));
+        return modelMapper.map(repo.save(modelMapper.map(dto, Book.class)), BookDto.class);
     }
 
     @Override
@@ -44,7 +47,7 @@ public class BookServiceImpl implements BookService {
             throw new NotFoundException(Book.class, new String[] {"Id"});
         }
         dto.setId(id);
-        return BookDto.fromEntity(repo.save(dto.toBook()));
+        return modelMapper.map(repo.save(modelMapper.map(dto, Book.class)), BookDto.class);
     }
 
     @Override
@@ -54,14 +57,14 @@ public class BookServiceImpl implements BookService {
             logger.warn("Can't get Book by Id {}", id);
             throw new NotFoundException(Book.class, new String[] {"Id"});
         }
-        return BookDto.fromEntity(book.get());
+        return modelMapper.map(book.get(), BookDto.class);
     }
 
     @Override
     public List<BookDto> getByTitle(String title) {
         List<BookDto> books =
                 repo.findByTitle(title).stream()
-                        .map(BookDto::fromEntity)
+                        .map(b -> modelMapper.map(b, BookDto.class))
                         .collect(Collectors.toList());
         if (books.isEmpty()) {
             logger.warn("Can't get Book by Title {}", title);
