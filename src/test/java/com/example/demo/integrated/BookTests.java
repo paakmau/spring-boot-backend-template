@@ -34,7 +34,7 @@ class BookTests {
 
     private Gson gson = new Gson();
 
-    private List<BookDto> bookVos =
+    private List<BookDto> bookDtos =
             Arrays.asList(
                     new BookDto(null, "Book 1", "Author 1"),
                     new BookDto(null, "Book 2", "Author 2"),
@@ -45,7 +45,7 @@ class BookTests {
 
     @BeforeEach
     void init() throws Exception {
-        for (BookDto dto : bookVos) {
+        for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.post("/books")
@@ -53,8 +53,8 @@ class BookTests {
                                             .content(gson.toJson(dto)))
                             .andExpect(MockMvcResultMatchers.status().isCreated())
                             .andReturn();
-            BookDto resVo = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
-            dto.setId(resVo.getId());
+            BookDto resDto = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+            dto.setId(resDto.getId());
         }
     }
 
@@ -68,13 +68,13 @@ class BookTests {
                                         .content(gson.toJson(dto)))
                         .andExpect(MockMvcResultMatchers.status().isCreated())
                         .andReturn();
-        BookDto resVo = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
-        assertNotNull(resVo);
+        BookDto resDto = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+        assertNotNull(resDto);
     }
 
     @Test
     void testDelete() throws Exception {
-        for (BookDto dto : bookVos)
+        for (BookDto dto : bookDtos)
             mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", dto.getId()))
                     .andExpect(MockMvcResultMatchers.status().isNoContent())
                     .andReturn();
@@ -82,8 +82,8 @@ class BookTests {
 
     @Test
     void testPut() throws Exception {
-        List<BookDto> modifiedVos =
-                bookVos.stream()
+        List<BookDto> modifiedDtos =
+                bookDtos.stream()
                         .map(
                                 dto ->
                                         new BookDto(
@@ -91,7 +91,7 @@ class BookTests {
                                                 dto.getTitle().toUpperCase(),
                                                 dto.getAuthor().toLowerCase()))
                         .collect(Collectors.toList());
-        for (BookDto dto : modifiedVos) {
+        for (BookDto dto : modifiedDtos) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.put("/books/{id}", dto.getId())
@@ -99,14 +99,14 @@ class BookTests {
                                             .content(gson.toJson(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
-            BookDto resVo = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
-            assertNotNull(resVo);
+            BookDto resDto = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+            assertNotNull(resDto);
         }
     }
 
     @Test
     void testGet() throws Exception {
-        for (BookDto dto : bookVos) {
+        for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.get("/books/{id}", dto.getId())
@@ -114,14 +114,14 @@ class BookTests {
                                             .content(gson.toJson(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
-            BookDto resVo = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
-            assertEquals(dto, resVo);
+            BookDto resDto = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+            assertEquals(dto, resDto);
         }
     }
 
     @Test
     void testGetByTitle() throws Exception {
-        for (BookDto dto : bookVos) {
+        for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.get("/books")
@@ -131,11 +131,11 @@ class BookTests {
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
 
-            Type bookVoListType = new TypeToken<ArrayList<BookDto>>() {}.getType();
-            List<BookDto> resVos =
-                    gson.fromJson(res.getResponse().getContentAsString(), bookVoListType);
-            assertEquals(1, resVos.size());
-            assertEquals(dto, resVos.get(0));
+            Type bookDtoListType = new TypeToken<ArrayList<BookDto>>() {}.getType();
+            List<BookDto> resDtos =
+                    gson.fromJson(res.getResponse().getContentAsString(), bookDtoListType);
+            assertEquals(1, resDtos.size());
+            assertEquals(dto, resDtos.get(0));
         }
     }
 

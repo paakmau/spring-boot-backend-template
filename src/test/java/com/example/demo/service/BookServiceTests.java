@@ -23,7 +23,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 @SpringBootTest
 class BookServiceTests {
     private static List<Book> books;
-    private static List<BookDto> bookVos;
+    private static List<BookDto> bookDtos;
 
     @MockBean private BookRepo repo;
 
@@ -39,7 +39,7 @@ class BookServiceTests {
                         new Book(2L, "Book 2", "Author 2"),
                         new Book(3L, "Book 3", "Author 3"));
 
-        bookVos =
+        bookDtos =
                 books.stream()
                         .map(b -> modelMapper.map(b, BookDto.class))
                         .collect(Collectors.toList());
@@ -53,7 +53,7 @@ class BookServiceTests {
         for (Book book : books) {
             Mockito.when(repo.findById(book.getId())).thenReturn(Optional.of(book));
         }
-        for (BookDto dto : bookVos) {
+        for (BookDto dto : bookDtos) {
             assertEquals(dto, service.get(dto.getId()));
         }
     }
@@ -63,7 +63,7 @@ class BookServiceTests {
         for (Book book : books) {
             Mockito.when(repo.findByTitle(book.getTitle())).thenReturn(Arrays.asList(book));
         }
-        for (BookDto dto : bookVos) {
+        for (BookDto dto : bookDtos) {
             List<BookDto> vos = service.getByTitle(dto.getTitle());
             assertEquals(1, vos.size());
             assertEquals(dto, vos.get(0));
