@@ -5,7 +5,6 @@ import com.example.demo.service.BookService;
 import com.example.demo.validation.OnCreate;
 import com.example.demo.validation.OnUpdate;
 import java.util.List;
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public BookDto post(@RequestBody @Validated(OnCreate.class) @Valid BookDto dto) {
+    public BookDto post(@RequestBody @Validated(OnCreate.class) BookDto dto) {
         return service.create(dto);
     }
 
@@ -43,8 +42,7 @@ public class BookController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public BookDto put(
-            @PathVariable @Min(1) long id,
-            @RequestBody @Validated(OnUpdate.class) @Valid BookDto dto) {
+            @PathVariable @Min(1) long id, @RequestBody @Validated(OnUpdate.class) BookDto dto) {
         return service.update(id, dto);
     }
 
