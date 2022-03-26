@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.dto.BookDto;
 import com.example.demo.entity.Book;
-import com.example.demo.exception.InvalidInputException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.repo.BookRepo;
 import java.util.List;
@@ -24,15 +23,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto create(BookDto dto) {
-        if (dto.getId() != null) {
-            logger.warn("The Id of Book is not null");
-            throw new InvalidInputException(Book.class, "Id is not null");
-        }
         return modelMapper.map(repo.save(modelMapper.map(dto, Book.class)), BookDto.class);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(long id) {
         if (repo.findById(id).isEmpty()) {
             logger.warn("Can't delete Book by Id {}", id);
             throw new NotFoundException(Book.class, new String[] {"Id"});
@@ -41,7 +36,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto update(Long id, BookDto dto) {
+    public BookDto update(long id, BookDto dto) {
         if (repo.findById(id).isEmpty()) {
             logger.warn("Can't update Book by Id {}", id);
             throw new NotFoundException(Book.class, new String[] {"Id"});
@@ -51,7 +46,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto get(Long id) {
+    public BookDto get(long id) {
         Optional<Book> book = repo.findById(id);
         if (book.isEmpty()) {
             logger.warn("Can't get Book by Id {}", id);

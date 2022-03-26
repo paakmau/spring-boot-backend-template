@@ -1,13 +1,20 @@
 package com.example.demo.dto;
 
+import com.example.demo.validation.OnCreate;
+import com.example.demo.validation.OnUpdate;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 public class BookDto {
+    @Null(groups = OnCreate.class)
+    @NotNull(groups = OnUpdate.class)
     private Long id;
 
-    private String title;
+    @NotBlank private String title;
 
-    private String author;
+    @NotBlank private String author;
 
     public BookDto() {}
 

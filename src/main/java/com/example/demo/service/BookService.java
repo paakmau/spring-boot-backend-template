@@ -6,11 +6,11 @@ import java.util.List;
 public interface BookService {
     BookDto create(BookDto dto);
 
-    void delete(Long id);
+    void delete(long id);
 
-    BookDto update(Long id, BookDto dto);
+    BookDto update(long id, BookDto dto);
 
-    BookDto get(Long id);
+    BookDto get(long id);
 
     List<BookDto> getByTitle(String title);
 }
