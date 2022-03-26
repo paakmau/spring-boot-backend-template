@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(indexes = {@Index(columnList = "title")})
@@ -15,9 +16,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @NotBlank private String title;
 
-    private String author;
+    @NotBlank private String author;
 
     public Book() {}
 
