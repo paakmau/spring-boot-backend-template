@@ -57,14 +57,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getByTitle(String title) {
-        List<BookDto> books =
-                repo.findByTitle(title).stream()
-                        .map(b -> modelMapper.map(b, BookDto.class))
-                        .collect(Collectors.toList());
-        if (books.isEmpty()) {
-            logger.warn("Can't get Book by Title {}", title);
-            throw new NotFoundException(Book.class, new String[] {"Title"});
-        }
-        return books;
+        return repo.findByTitle(title).stream()
+                .map(b -> modelMapper.map(b, BookDto.class))
+                .collect(Collectors.toList());
     }
 }
