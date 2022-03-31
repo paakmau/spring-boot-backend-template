@@ -28,7 +28,6 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'com.google.code.gson:gson:2.8.8'
 
     liquibaseRuntime 'org.liquibase:liquibase-core:4.3.3'
     liquibaseRuntime 'mysql:mysql-connector-java'

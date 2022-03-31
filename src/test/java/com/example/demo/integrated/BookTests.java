@@ -4,9 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.example.demo.dto.BookDto;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,9 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @Transactional
 class BookTests {
-    @Autowired private MockMvc mvc;
+    @Autowired ObjectMapper objectMapper;
 
-    private Gson gson = new Gson();
+    @Autowired private MockMvc mvc;
 
     private List<BookDto> bookDtos =
             Arrays.asList(
@@ -50,10 +49,11 @@ class BookTests {
                     mvc.perform(
                                     MockMvcRequestBuilders.post("/books")
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content(gson.toJson(dto)))
+                                            .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isCreated())
                             .andReturn();
-            BookDto resDto = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
             dto.setId(resDto.getId());
         }
     }
@@ -65,10 +65,11 @@ class BookTests {
                 mvc.perform(
                                 MockMvcRequestBuilders.post("/books")
                                         .contentType(MediaType.APPLICATION_JSON)
-                                        .content(gson.toJson(dto)))
+                                        .content(objectMapper.writeValueAsString(dto)))
                         .andExpect(MockMvcResultMatchers.status().isCreated())
                         .andReturn();
-        BookDto resDto = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+        BookDto resDto =
+                objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
         assertNotNull(resDto);
     }
 
@@ -96,10 +97,11 @@ class BookTests {
                     mvc.perform(
                                     MockMvcRequestBuilders.put("/books/{id}", dto.getId())
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content(gson.toJson(dto)))
+                                            .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
-            BookDto resDto = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
             assertNotNull(resDto);
         }
     }
@@ -111,10 +113,11 @@ class BookTests {
                     mvc.perform(
                                     MockMvcRequestBuilders.get("/books/{id}", dto.getId())
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content(gson.toJson(dto)))
+                                            .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
-            BookDto resDto = gson.fromJson(res.getResponse().getContentAsString(), BookDto.class);
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
             assertEquals(dto, resDto);
         }
     }
@@ -127,13 +130,14 @@ class BookTests {
                                     MockMvcRequestBuilders.get("/books")
                                             .param("title", dto.getTitle())
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .content(gson.toJson(dto)))
+                                            .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
 
-            Type bookDtoListType = new TypeToken<ArrayList<BookDto>>() {}.getType();
             List<BookDto> resDtos =
-                    gson.fromJson(res.getResponse().getContentAsString(), bookDtoListType);
+                    objectMapper.readValue(
+                            res.getResponse().getContentAsString(),
+                            new TypeReference<ArrayList<BookDto>>() {});
             assertEquals(1, resDtos.size());
             assertEquals(dto, resDtos.get(0));
         }
