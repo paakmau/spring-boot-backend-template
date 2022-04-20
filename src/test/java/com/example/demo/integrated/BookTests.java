@@ -23,44 +23,23 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
 class BookTests {
     @Autowired private ObjectMapper objectMapper;
 
     @Autowired private MockMvc mvc;
 
-    private final List<BookDto> bookDtos =
-            Arrays.asList(
-                    new BookDto(null, "Book 1", "Author 1"),
-                    new BookDto(null, "Book 2", "Author 2"),
-                    new BookDto(null, "Book 3", "Author 3"));
-
     @BeforeAll
     static void initAll() {}
 
     @BeforeEach
-    void init() throws Exception {
-        for (BookDto dto : bookDtos) {
-            MvcResult res =
-                    mvc.perform(
-                                    MockMvcRequestBuilders.post("/books")
-                                            .contentType(MediaType.APPLICATION_JSON)
-                                            .content(objectMapper.writeValueAsString(dto)))
-                            .andExpect(MockMvcResultMatchers.status().isCreated())
-                            .andReturn();
-            BookDto resDto =
-                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
-            dto.setId(resDto.getId());
-        }
-    }
+    void init() {}
 
     @Test
     void testPost() throws Exception {
-        BookDto dto = new BookDto(null, "Book 10", "Author 10");
+        BookDto dto = new BookDto(null, "Book A10", "Author A10");
         MvcResult res =
                 mvc.perform(
                                 MockMvcRequestBuilders.post("/books")
@@ -75,6 +54,25 @@ class BookTests {
 
     @Test
     void testDelete() throws Exception {
+        final List<BookDto> bookDtos =
+                Arrays.asList(
+                        new BookDto(null, "Book B1", "Author B1"),
+                        new BookDto(null, "Book B2", "Author B2"),
+                        new BookDto(null, "Book B3", "Author B3"));
+
+        for (BookDto dto : bookDtos) {
+            MvcResult res =
+                    mvc.perform(
+                                    MockMvcRequestBuilders.post("/books")
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .content(objectMapper.writeValueAsString(dto)))
+                            .andExpect(MockMvcResultMatchers.status().isCreated())
+                            .andReturn();
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
+            dto.setId(resDto.getId());
+        }
+
         for (BookDto dto : bookDtos)
             mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", dto.getId()))
                     .andExpect(MockMvcResultMatchers.status().isNoContent())
@@ -83,6 +81,25 @@ class BookTests {
 
     @Test
     void testPut() throws Exception {
+        final List<BookDto> bookDtos =
+                Arrays.asList(
+                        new BookDto(null, "Book C1", "Author C1"),
+                        new BookDto(null, "Book C2", "Author C2"),
+                        new BookDto(null, "Book C3", "Author C3"));
+
+        for (BookDto dto : bookDtos) {
+            MvcResult res =
+                    mvc.perform(
+                                    MockMvcRequestBuilders.post("/books")
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .content(objectMapper.writeValueAsString(dto)))
+                            .andExpect(MockMvcResultMatchers.status().isCreated())
+                            .andReturn();
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
+            dto.setId(resDto.getId());
+        }
+
         List<BookDto> modifiedDtos =
                 bookDtos.stream()
                         .map(
@@ -108,6 +125,25 @@ class BookTests {
 
     @Test
     void testGet() throws Exception {
+        final List<BookDto> bookDtos =
+                Arrays.asList(
+                        new BookDto(null, "Book D1", "Author D1"),
+                        new BookDto(null, "Book D2", "Author D2"),
+                        new BookDto(null, "Book D3", "Author D3"));
+
+        for (BookDto dto : bookDtos) {
+            MvcResult res =
+                    mvc.perform(
+                                    MockMvcRequestBuilders.post("/books")
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .content(objectMapper.writeValueAsString(dto)))
+                            .andExpect(MockMvcResultMatchers.status().isCreated())
+                            .andReturn();
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
+            dto.setId(resDto.getId());
+        }
+
         for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
@@ -124,6 +160,25 @@ class BookTests {
 
     @Test
     void testGetByTitle() throws Exception {
+        final List<BookDto> bookDtos =
+                Arrays.asList(
+                        new BookDto(null, "Book E1", "Author E1"),
+                        new BookDto(null, "Book E2", "Author E2"),
+                        new BookDto(null, "Book E3", "Author E3"));
+
+        for (BookDto dto : bookDtos) {
+            MvcResult res =
+                    mvc.perform(
+                                    MockMvcRequestBuilders.post("/books")
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .content(objectMapper.writeValueAsString(dto)))
+                            .andExpect(MockMvcResultMatchers.status().isCreated())
+                            .andReturn();
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
+            dto.setId(resDto.getId());
+        }
+
         for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
