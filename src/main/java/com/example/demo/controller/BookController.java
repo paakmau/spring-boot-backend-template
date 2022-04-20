@@ -7,7 +7,6 @@ import com.example.demo.validation.OnUpdate;
 import java.util.List;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/books")
 @Validated
 public class BookController {
-    @Autowired private BookService service;
+    private final BookService service;
+
+    public BookController(BookService service) {
+        this.service = service;
+    }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)

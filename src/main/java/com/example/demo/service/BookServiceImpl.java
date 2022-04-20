@@ -10,16 +10,20 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookServiceImpl implements BookService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired private BookRepo repo;
+    private final BookRepo repo;
+
+    public BookServiceImpl(ModelMapper modelMapper, BookRepo repo) {
+        this.modelMapper = modelMapper;
+        this.repo = repo;
+    }
 
     @Override
     public BookDto create(BookDto dto) {
