@@ -74,8 +74,18 @@ class BookTests {
         }
 
         for (BookDto dto : bookDtos)
+            mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.getId()))
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andReturn();
+
+        for (BookDto dto : bookDtos)
             mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", dto.getId()))
                     .andExpect(MockMvcResultMatchers.status().isNoContent())
+                    .andReturn();
+
+        for (BookDto dto : bookDtos)
+            mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.getId()))
+                    .andExpect(MockMvcResultMatchers.status().isNotFound())
                     .andReturn();
     }
 
@@ -100,6 +110,16 @@ class BookTests {
             dto.setId(resDto.getId());
         }
 
+        for (BookDto dto : bookDtos) {
+            MvcResult res =
+                    mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.getId()))
+                            .andExpect(MockMvcResultMatchers.status().isOk())
+                            .andReturn();
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
+            assertEquals(dto, resDto);
+        }
+
         List<BookDto> modifiedDtos =
                 bookDtos.stream()
                         .map(
@@ -119,7 +139,17 @@ class BookTests {
                             .andReturn();
             BookDto resDto =
                     objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
-            assertNotNull(resDto);
+            assertEquals(dto, resDto);
+        }
+
+        for (BookDto dto : modifiedDtos) {
+            MvcResult res =
+                    mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.getId()))
+                            .andExpect(MockMvcResultMatchers.status().isOk())
+                            .andReturn();
+            BookDto resDto =
+                    objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
+            assertEquals(dto, resDto);
         }
     }
 
