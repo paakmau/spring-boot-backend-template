@@ -29,11 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @Transactional
 class BookTests {
-    @Autowired ObjectMapper objectMapper;
+    @Autowired private ObjectMapper objectMapper;
 
     @Autowired private MockMvc mvc;
 
-    private List<BookDto> bookDtos =
+    private final List<BookDto> bookDtos =
             Arrays.asList(
                     new BookDto(null, "Book 1", "Author 1"),
                     new BookDto(null, "Book 2", "Author 2"),
