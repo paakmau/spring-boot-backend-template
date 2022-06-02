@@ -47,7 +47,7 @@ liquibase {
             url 'jdbc:mysql://localhost:3306/demo?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC'
             username 'root'
             password System.getenv('MYSQL_ROOT_PASSWORD')
-            referenceUrl 'hibernate:spring:com.example.demo.entity?dialect=liquibase.ext.hibernate.database.HibernateGenericDialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
+            referenceUrl 'hibernate:spring:com.example.demo.entity?dialect=org.hibernate.dialect.MySQL8Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
         }
     }
 }
