@@ -1,7 +1,7 @@
 {
     "recommendations": [
         "vscjava.vscode-java-pack",
-        "pivotal.vscode-boot-dev-pack",
+        "vmware.vscode-boot-dev-pack",
         "richardwillis.vscode-gradle-extension-pack",
         "richardwillis.vscode-spotless-gradle",
         "sonarsource.sonarlint-vscode"
