@@ -22,7 +22,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.modelmapper:modelmapper:3.1.0'
-    implementation "io.springfox:springfox-boot-starter:3.0.0"
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
     implementation 'org.liquibase:liquibase-core:4.3.3'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
