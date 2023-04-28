@@ -7,7 +7,7 @@ This is a Spring Boot backend template.
 ## Features
 
 - Database version control with Liquibase
-- Automated API document generation with SpringFox
+- Automated API document generation with Springdoc
 - Code formatting with Spotless
 - Code quality checking with Sonarlint
 - Commit message cheching with Commitlint
@@ -32,27 +32,27 @@ $ cd spring-boot-backend-template
 $ ./gradlew bootRun
 ```
 
-Enter `http://localhost:8080/swagger-ui/` in the browser to access the document.
+Enter `http://localhost:8080/swagger-ui/index.html` in the browser to access the document.
 
 ## Document generation
 
-<https://github.com/springfox/springfox>
+<https://github.com/springdoc/springdoc-openapi>
 
-SpringFox will scan the `controller` package, and automatically generate API document.
+Springdoc will scan the `controller` package, and automatically generate API document.
 
 When the application is running, these URLs are available:
 
-### All Swagger Resources(groups)
-
-`http://localhost:8080/swagger-resources`
-
 ### Swagger UI endpoint
 
-`http://localhost:8080/swagger-ui/`
+`http://localhost:8080/swagger-ui/index.html`
 
 ### Swagger docs endpoint
 
 `http://localhost:8080/v3/api-docs`
+
+### Swagger docs in yaml format endpoint
+
+`http://localhost:8080/v3/api-docs.yaml`
 
 ## Multiple environments
 
