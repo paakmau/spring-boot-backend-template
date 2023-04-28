@@ -3,12 +3,14 @@ package com.example.demo.config;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.responses.ApiResponse;
-import java.util.Arrays;
-import java.util.Optional;
+
 import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 @Configuration
 public class SpringdocConfig {
