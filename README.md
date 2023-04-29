@@ -60,6 +60,12 @@ This template configures dev and prod environments via Spring Boot profiles. The
 
 Configuration for test environment is placed alone.
 
+Profiles can be specified like this:
+
+```shell
+$ ./gradlew bootRun --args='--spring.profiles.active=uat'
+```
+
 ## Database
 
 H2 Database is used for dev and test. MySQL is used for prod.
