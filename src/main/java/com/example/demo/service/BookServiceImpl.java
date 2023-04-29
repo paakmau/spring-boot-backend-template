@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -60,8 +59,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getByTitle(String title) {
-        return repo.findByTitle(title).stream()
-                .map(BookMapper.INSTANCE::toDto)
-                .collect(Collectors.toList());
+        return repo.findByTitle(title).stream().map(BookMapper.INSTANCE::toDto).toList();
     }
 }
