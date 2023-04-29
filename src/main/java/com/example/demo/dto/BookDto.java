@@ -3,11 +3,11 @@ package com.example.demo.dto;
 import com.example.demo.validation.OnCreate;
 import com.example.demo.validation.OnUpdate;
 
-import java.util.Objects;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import java.util.Objects;
 
 public class BookDto {
     @Null(groups = OnCreate.class)

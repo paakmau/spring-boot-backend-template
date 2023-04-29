@@ -1,8 +1,8 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.5.4'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.liquibase.gradle' version '2.0.4'
+    id 'org.springframework.boot' version '3.0.6'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.liquibase.gradle' version '2.2.0'
     id 'com.diffplug.spotless' version '6.18.0'
     id 'name.remal.sonarlint' version '3.1.0'
     id 'com.star-zero.gradle.githook' version '1.2.1'
@@ -22,19 +22,20 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
-    implementation 'org.liquibase:liquibase-core:4.3.3'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation 'org.liquibase:liquibase-core:4.19.0'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 
-    liquibaseRuntime 'org.liquibase:liquibase-core:4.3.3'
-    liquibaseRuntime 'mysql:mysql-connector-java'
+    liquibaseRuntime 'org.liquibase:liquibase-core:4.19.0'
+    liquibaseRuntime 'info.picocli:picocli:4.6.1'
+    liquibaseRuntime 'com.mysql:mysql-connector-j'
     liquibaseRuntime 'org.springframework.boot:spring-boot-starter-data-jpa'
-    liquibaseRuntime 'org.liquibase.ext:liquibase-hibernate5:4.4.3'
+    liquibaseRuntime 'org.liquibase.ext:liquibase-hibernate6:4.19.0'
     liquibaseRuntime sourceSets.main.output
 }
 
@@ -45,11 +46,11 @@ test {
 liquibase {
     activities {
         main {
-            changeLogFile 'src/main/resources/db/changelog/db.changelog-master.yaml'
+            changelogFile 'src/main/resources/db/changelog/db.changelog-master.yaml'
             url 'jdbc:mysql://localhost:3306/demo?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC'
             username 'root'
             password System.getenv('MYSQL_ROOT_PASSWORD')
-            referenceUrl 'hibernate:spring:com.example.demo.entity?dialect=org.hibernate.dialect.MySQL8Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
+            referenceUrl 'hibernate:spring:com.example.demo.entity?dialect=org.hibernate.dialect.MySQL8Dialect&hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
         }
     }
 }
