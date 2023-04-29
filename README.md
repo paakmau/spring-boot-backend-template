@@ -42,23 +42,18 @@ Springdoc will scan the `controller` package, and automatically generate API doc
 
 When the application is running, these URLs are available:
 
-### Swagger UI endpoint
-
-`http://localhost:8080/swagger-ui/index.html`
-
-### Swagger docs endpoint
-
-`http://localhost:8080/v3/api-docs`
-
-### Swagger docs in yaml format endpoint
-
-`http://localhost:8080/v3/api-docs.yaml`
+- Swagger UI endpoint  
+  `http://localhost:8080/swagger-ui/index.html`
+- Swagger docs endpoint  
+  `http://localhost:8080/v3/api-docs`
+- Swagger docs in yaml format endpoint  
+  `http://localhost:8080/v3/api-docs.yaml`
 
 ## Multiple environments
 
 This template configures dev and prod environments via Spring Boot profiles. The default profile is dev.
 
-Configuration for test environment is placed alone.
+The `application.yaml` for test environment is placed alone.
 
 Profiles can be specified like this:
 
