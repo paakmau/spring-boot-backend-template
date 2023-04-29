@@ -14,7 +14,7 @@ This is a Spring Boot backend template.
 
 ## Requirements
 
-- JDK (version 11 or later)
+- JDK (version 17 or later)
 - MySQL
 
 ## Quick start
