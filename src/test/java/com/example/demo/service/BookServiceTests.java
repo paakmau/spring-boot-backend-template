@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.example.demo.dto.BookDto;
 import com.example.demo.entity.Book;
+import com.example.demo.mapper.BookMapper;
 import com.example.demo.repo.BookRepo;
 
 import org.junit.jupiter.api.AfterAll;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -33,18 +33,13 @@ class BookServiceTests {
 
     @BeforeAll
     static void initAll() {
-        ModelMapper modelMapper = new ModelMapper();
-
         books =
                 Arrays.asList(
                         new Book(1L, "Book 1", "Author 1"),
                         new Book(2L, "Book 2", "Author 2"),
                         new Book(3L, "Book 3", "Author 3"));
 
-        bookDtos =
-                books.stream()
-                        .map(b -> modelMapper.map(b, BookDto.class))
-                        .collect(Collectors.toList());
+        bookDtos = books.stream().map(BookMapper.INSTANCE::toDto).collect(Collectors.toList());
     }
 
     @BeforeEach
