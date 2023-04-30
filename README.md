@@ -78,7 +78,7 @@ The changelog file is the `db.changelog-master.yaml` in the `resources/db/change
 You can use Liquibase Gradle plugin to maintain the changelog. To modify the database structure, you should follow this workflow:
 
 1. Edit entities in the `entity` package
-2. Run the `diffChangeLog` Gradle task
+2. Run the `diffChangelog` Gradle task
 3. Check if the modified `db.changelog-master.yaml` does what you want, edit it if not
 4. Run this application, the database will be synced by Liquibase
 
