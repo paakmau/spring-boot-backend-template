@@ -57,6 +57,8 @@ liquibase {
 
 spotless {
     java {
+        target 'src/*/java/**/*.java'
+
         importOrder()
         removeUnusedImports()
 
@@ -73,6 +75,7 @@ spotless {
 
     json {
         target '**/*.json'
+        targetExclude 'bin/**/*.json'
 
         eclipseWtp('json')
 
