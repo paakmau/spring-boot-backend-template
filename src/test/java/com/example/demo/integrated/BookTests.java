@@ -1,7 +1,6 @@
 package com.example.demo.integrated;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.example.demo.dto.BookDto;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -51,7 +50,7 @@ class BookTests {
                         .andReturn();
         BookDto resDto =
                 objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
-        assertNotNull(resDto);
+        assertEquals(dto.withId(resDto.id()), resDto);
     }
 
     @Test
