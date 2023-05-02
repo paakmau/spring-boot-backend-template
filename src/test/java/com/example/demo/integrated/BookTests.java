@@ -56,13 +56,13 @@ class BookTests {
 
     @Test
     void testDelete() throws Exception {
-        final List<BookDto> bookDtos =
+        List<BookDto> bookDtos = new ArrayList<>();
+
+        for (BookDto dto :
                 Arrays.asList(
                         new BookDto(null, "Book B1", "Author B1"),
                         new BookDto(null, "Book B2", "Author B2"),
-                        new BookDto(null, "Book B3", "Author B3"));
-
-        for (BookDto dto : bookDtos) {
+                        new BookDto(null, "Book B3", "Author B3"))) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.post("/books")
@@ -72,34 +72,34 @@ class BookTests {
                             .andReturn();
             BookDto resDto =
                     objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
-            dto.setId(resDto.getId());
+            bookDtos.add(resDto);
         }
 
         for (BookDto dto : bookDtos)
-            mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.getId()))
+            mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.id()))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andReturn();
 
         for (BookDto dto : bookDtos)
-            mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", dto.getId()))
+            mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", dto.id()))
                     .andExpect(MockMvcResultMatchers.status().isNoContent())
                     .andReturn();
 
         for (BookDto dto : bookDtos)
-            mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.getId()))
+            mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.id()))
                     .andExpect(MockMvcResultMatchers.status().isNotFound())
                     .andReturn();
     }
 
     @Test
     void testPut() throws Exception {
-        final List<BookDto> bookDtos =
+        List<BookDto> bookDtos = new ArrayList<>();
+
+        for (BookDto dto :
                 Arrays.asList(
                         new BookDto(null, "Book C1", "Author C1"),
                         new BookDto(null, "Book C2", "Author C2"),
-                        new BookDto(null, "Book C3", "Author C3"));
-
-        for (BookDto dto : bookDtos) {
+                        new BookDto(null, "Book C3", "Author C3"))) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.post("/books")
@@ -109,12 +109,12 @@ class BookTests {
                             .andReturn();
             BookDto resDto =
                     objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
-            dto.setId(resDto.getId());
+            bookDtos.add(resDto);
         }
 
         for (BookDto dto : bookDtos) {
             MvcResult res =
-                    mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.getId()))
+                    mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.id()))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
             BookDto resDto =
@@ -127,14 +127,14 @@ class BookTests {
                         .map(
                                 dto ->
                                         new BookDto(
-                                                dto.getId(),
-                                                dto.getTitle().toUpperCase(),
-                                                dto.getAuthor().toLowerCase()))
+                                                dto.id(),
+                                                dto.title().toUpperCase(),
+                                                dto.author().toLowerCase()))
                         .collect(Collectors.toList());
         for (BookDto dto : modifiedDtos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.put("/books/{id}", dto.getId())
+                                    MockMvcRequestBuilders.put("/books/{id}", dto.id())
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -146,7 +146,7 @@ class BookTests {
 
         for (BookDto dto : modifiedDtos) {
             MvcResult res =
-                    mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.getId()))
+                    mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.id()))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
             BookDto resDto =
@@ -157,13 +157,13 @@ class BookTests {
 
     @Test
     void testGet() throws Exception {
-        final List<BookDto> bookDtos =
+        List<BookDto> bookDtos = new ArrayList<>();
+
+        for (BookDto dto :
                 Arrays.asList(
                         new BookDto(null, "Book D1", "Author D1"),
                         new BookDto(null, "Book D2", "Author D2"),
-                        new BookDto(null, "Book D3", "Author D3"));
-
-        for (BookDto dto : bookDtos) {
+                        new BookDto(null, "Book D3", "Author D3"))) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.post("/books")
@@ -173,13 +173,13 @@ class BookTests {
                             .andReturn();
             BookDto resDto =
                     objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
-            dto.setId(resDto.getId());
+            bookDtos.add(resDto);
         }
 
         for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.get("/books/{id}", dto.getId())
+                                    MockMvcRequestBuilders.get("/books/{id}", dto.id())
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -192,13 +192,13 @@ class BookTests {
 
     @Test
     void testGetByTitle() throws Exception {
-        final List<BookDto> bookDtos =
+        List<BookDto> bookDtos = new ArrayList<>();
+
+        for (BookDto dto :
                 Arrays.asList(
                         new BookDto(null, "Book E1", "Author E1"),
                         new BookDto(null, "Book E2", "Author E2"),
-                        new BookDto(null, "Book E3", "Author E3"));
-
-        for (BookDto dto : bookDtos) {
+                        new BookDto(null, "Book E3", "Author E3"))) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.post("/books")
@@ -208,14 +208,14 @@ class BookTests {
                             .andReturn();
             BookDto resDto =
                     objectMapper.readValue(res.getResponse().getContentAsString(), BookDto.class);
-            dto.setId(resDto.getId());
+            bookDtos.add(resDto);
         }
 
         for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
                                     MockMvcRequestBuilders.get("/books")
-                                            .param("title", dto.getTitle())
+                                            .param("title", dto.title())
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())

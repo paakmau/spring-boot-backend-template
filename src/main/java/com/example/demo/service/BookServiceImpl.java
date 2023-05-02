@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
             logger.warn("Can't update Book by Id {}", id);
             throw new NotFoundException(Book.class, new String[] {"Id"});
         }
-        dto.setId(id);
+        dto.withId(id);
         return BookMapper.INSTANCE.toDto(repo.save(BookMapper.INSTANCE.toEntity(dto)));
     }
 

@@ -51,7 +51,7 @@ class BookServiceTests {
             Mockito.when(repo.findById(book.getId())).thenReturn(Optional.of(book));
         }
         for (BookDto dto : bookDtos) {
-            assertEquals(dto, service.get(dto.getId()));
+            assertEquals(dto, service.get(dto.id()));
         }
     }
 
@@ -61,7 +61,7 @@ class BookServiceTests {
             Mockito.when(repo.findByTitle(book.getTitle())).thenReturn(Arrays.asList(book));
         }
         for (BookDto dto : bookDtos) {
-            List<BookDto> vos = service.getByTitle(dto.getTitle());
+            List<BookDto> vos = service.getByTitle(dto.title());
             assertEquals(1, vos.size());
             assertEquals(dto, vos.get(0));
         }
