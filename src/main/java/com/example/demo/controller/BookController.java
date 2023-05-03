@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/books")
+@RequestMapping(value = "/book")
 @Validated
 public class BookController {
     private final BookService service;

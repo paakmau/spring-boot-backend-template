@@ -43,7 +43,7 @@ class BookTests {
         BookDto dto = new BookDto(null, "Book A10", "Author A10");
         MvcResult res =
                 mvc.perform(
-                                MockMvcRequestBuilders.post("/books")
+                                MockMvcRequestBuilders.post("/book")
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .content(objectMapper.writeValueAsString(dto)))
                         .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -64,7 +64,7 @@ class BookTests {
                         new BookDto(null, "Book B3", "Author B3"))) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.post("/books")
+                                    MockMvcRequestBuilders.post("/book")
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -75,17 +75,17 @@ class BookTests {
         }
 
         for (BookDto dto : bookDtos)
-            mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.id()))
+            mvc.perform(MockMvcRequestBuilders.get("/book/{id}", dto.id()))
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andReturn();
 
         for (BookDto dto : bookDtos)
-            mvc.perform(MockMvcRequestBuilders.delete("/books/{id}", dto.id()))
+            mvc.perform(MockMvcRequestBuilders.delete("/book/{id}", dto.id()))
                     .andExpect(MockMvcResultMatchers.status().isNoContent())
                     .andReturn();
 
         for (BookDto dto : bookDtos)
-            mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.id()))
+            mvc.perform(MockMvcRequestBuilders.get("/book/{id}", dto.id()))
                     .andExpect(MockMvcResultMatchers.status().isNotFound())
                     .andReturn();
     }
@@ -101,7 +101,7 @@ class BookTests {
                         new BookDto(null, "Book C3", "Author C3"))) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.post("/books")
+                                    MockMvcRequestBuilders.post("/book")
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -113,7 +113,7 @@ class BookTests {
 
         for (BookDto dto : bookDtos) {
             MvcResult res =
-                    mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.id()))
+                    mvc.perform(MockMvcRequestBuilders.get("/book/{id}", dto.id()))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
             BookDto resDto =
@@ -133,7 +133,7 @@ class BookTests {
         for (BookDto dto : modifiedDtos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.put("/books/{id}", dto.id())
+                                    MockMvcRequestBuilders.put("/book/{id}", dto.id())
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -145,7 +145,7 @@ class BookTests {
 
         for (BookDto dto : modifiedDtos) {
             MvcResult res =
-                    mvc.perform(MockMvcRequestBuilders.get("/books/{id}", dto.id()))
+                    mvc.perform(MockMvcRequestBuilders.get("/book/{id}", dto.id()))
                             .andExpect(MockMvcResultMatchers.status().isOk())
                             .andReturn();
             BookDto resDto =
@@ -165,7 +165,7 @@ class BookTests {
                         new BookDto(null, "Book D3", "Author D3"))) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.post("/books")
+                                    MockMvcRequestBuilders.post("/book")
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -178,7 +178,7 @@ class BookTests {
         for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.get("/books/{id}", dto.id())
+                                    MockMvcRequestBuilders.get("/book/{id}", dto.id())
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -200,7 +200,7 @@ class BookTests {
                         new BookDto(null, "Book E3", "Author E3"))) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.post("/books")
+                                    MockMvcRequestBuilders.post("/book")
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
                             .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -213,7 +213,7 @@ class BookTests {
         for (BookDto dto : bookDtos) {
             MvcResult res =
                     mvc.perform(
-                                    MockMvcRequestBuilders.get("/books")
+                                    MockMvcRequestBuilders.get("/book")
                                             .param("title", dto.title())
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .content(objectMapper.writeValueAsString(dto)))
