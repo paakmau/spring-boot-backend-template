@@ -154,3 +154,28 @@ There are some hooks configured in this template:
 | `pre-commit` | `sonarlintMain` |
 | `pre-commit` | `sonarlintTest` |
 | `commit-msg` | `commitlint`    |
+
+## Deployment
+
+The project can be build as a Docker image.
+
+Run the `bootJar` task to build a `.jar` file.
+Notice the `build` task should not be used.
+
+```shell
+$ ./gradlew bootJar
+```
+
+A `demo-0.0.1-SNAPSHOT.jar` file will be found in the `build/libs` folder.
+Now you can use the Dockerfile to build an image.
+Besides the `docker build` command, you can also use Buildah.
+
+```shell
+$ buildah bud -t demo:0.0.1-SNAPSHOT
+```
+
+In addition, the image can be exported as follows, if built with Buildah.
+
+```shell
+$ buildah push demo:0.0.1-SNAPSHOT docker-archive:./demo.tar:demo:0.0.1-SNAPSHOT
+```
