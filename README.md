@@ -168,14 +168,25 @@ $ ./gradlew bootJar
 
 A `demo-0.0.1-SNAPSHOT.jar` file will be found in the `build/libs` folder.
 Now you can use the Dockerfile to build an image.
+
+```shell
+$ docker build -t demo:0.0.1-SNAPSHOT .
+```
+
 Besides the `docker build` command, you can also use Buildah.
 
 ```shell
 $ buildah bud -t demo:0.0.1-SNAPSHOT
 ```
 
-In addition, the image can be exported as follows, if built with Buildah.
+In addition, the image can be exported as follows.
 
 ```shell
-$ buildah push demo:0.0.1-SNAPSHOT docker-archive:./demo.tar:demo:0.0.1-SNAPSHOT
+$ docker save -o demo-0.0.1-SNAPSHOT.tar demo:0.0.1-SNAPSHOT
+```
+
+The command should like this if built with Buildah.
+
+```shell
+$ buildah push demo:0.0.1-SNAPSHOT docker-archive:./demo-0.0.1-SNAPSHOT.tar:demo:0.0.1-SNAPSHOT
 ```
